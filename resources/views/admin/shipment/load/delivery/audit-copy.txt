@@ -1,0 +1,104 @@
+<table class="table table-striped">
+  <thead>
+    <tr class="bg-dark">
+      <th>Parcel</th>
+      <th>Time</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Status: <b class="budge">label Created</b> <br>Merchant: {{$shipment->user->first_name}} {{$shipment->user->last_name}}</td>
+      <td>{{date('M d, y',strtotime($shipment->created_at))}} <br>
+        {{date('H:i:s',strtotime($shipment->created_at))}}</td>
+      <td>@if($shipment->merchant_note==null)N/A @else $shipment->merchant_note @endif</td>
+    </tr>
+       @if($driverAssign !=null)
+    <tr>
+      <td>Status: {{$driverAssign->status}} <br>
+        <?php $admin_id =  \DB::table('driver_shipment')->where(['driver_id'=>$driverAssign->user_id,'shipment_id'=>$driverAssign->shipment_id])->pluck('admin_id')->first();
+        $admin = \DB::table('admins')->select('first_name','last_name')->where('id',$admin_id)->first();?>
+
+        Assigned by: {{$admin->last_name.' '.$admin->last_name}} <br>
+
+        Driver: <?php $driver = \DB::table('drivers')->select('first_name','last_name')->where('id',$driverAssign->user_id)->first(); echo $driver->first_name.' '.$driver->last_name; ?><br>
+      </td>
+      <td>{{date('M d, y',strtotime($driverAssign->created_at))}} <br>
+        {{date('H:i:s',strtotime($driverAssign->created_at))}}</td>
+      <td>{{$driverAssign->note}}</td>
+    </tr>
+    @endif
+
+    @if($driverReceive !=null)
+    <tr>
+      <td>Status: {{$driverReceive->status}} <br>
+        <?php $admin_id =  \DB::table('driver_shipment')->where(['driver_id'=>$driverReceive->user_id,'shipment_id'=>$driverReceive->shipment_id])->pluck('admin_id')->first();
+        $admin = \DB::table('admins')->select('first_name','last_name')->where('id',$admin_id)->first();?>
+
+        Assigned by: {{$admin->last_name.' '.$admin->last_name}} <br>
+
+        Driver: <?php $driver = \DB::table('drivers')->select('first_name','last_name')->where('id',$driverReceive->user_id)->first(); echo $driver->first_name.' '.$driver->last_name; ?><br>
+      </td>
+      <td>{{date('M d, y',strtotime($driverReceive->created_at))}} <br>
+        {{date('H:i:s',strtotime($driverReceive->created_at))}}</td>
+      <td>{{$driverReceive->note}}</td>
+    </tr>
+    @endif
+    @if($dispatch !=null)
+    <tr>
+      <th scope="row">Status: {{$dispatch->status}}<br>
+        Performed by: 
+        <?php $name = \DB::table('admins')->select('first_name','last_name')->where('id',$dispatch->user_id)->first(); echo $name->first_name.' '.$name->last_name; ?>
+      </th>
+      <td>{{date('M d, y',strtotime($dispatch->created_at))}} <br>
+        {{date('H:i:s',strtotime($dispatch->created_at))}}</td>
+      <td>{{$dispatch->note}}</td>
+    </tr>@endif
+    
+    @if($transit !=null)
+    <tr>
+      <th scope="row">Status: {{$transit->status}}<br>
+        Performed by: 
+        <?php $name = \DB::table('admins')->select('first_name','last_name')->where('id',$transit->user_id)->first(); echo $name->first_name.' '.$name->last_name; ?>
+      </th>
+      <td>{{date('M d, y',strtotime($transit->created_at))}} <br>
+        {{date('H:i:s',strtotime($transit->created_at))}}</td>
+      <td>{{$transit->note}}</td>
+    </tr> @endif
+
+    @if($outForDelivery !=null)
+    <tr>
+      <th scope="row">Status: {{$outForDelivery->status}}<br>
+        Performed by: 
+        <?php $name = \DB::table('admins')->select('first_name','last_name')->where('id',$outForDelivery->user_id)->first(); echo $name->first_name.' '.$name->last_name; ?>
+      </th>
+      <td>{{date('M d, y',strtotime($outForDelivery->created_at))}} <br>
+        {{date('H:i:s',strtotime($outForDelivery->created_at))}}</td>
+      <td>{{$outForDelivery->note}}</td>
+    </tr> @endif
+
+    @if($assignDriver !=null)
+    <tr>
+      <th scope="row">Status: {{$assignDriver->status}}<br>
+        Performed by: 
+        <?php $name = \DB::table('admins')->select('first_name','last_name')->where('id',$assignDriver->user_id)->first(); echo $name->first_name.' '.$name->last_name; ?>
+      </th>
+      <td>{{date('M d, y',strtotime($assignDriver->created_at))}} <br>
+        {{date('H:i:s',strtotime($assignDriver->created_at))}}</td>
+      <td>{{$assignDriver->note}}</td>
+    </tr> @endif
+
+    @if($deliverReport !=null)
+    <tr>
+      <th scope="row">Status: {{$deliverReport->status}}<br>
+        Performed by: 
+        <?php $name = \DB::table('drivers')->select('first_name','last_name')->where('id',$deliverReport->user_id)->first(); echo $name->first_name.' '.$name->last_name; ?>
+      </th>
+      <td>{{date('M d, y',strtotime($deliverReport->created_at))}} <br>
+        {{date('H:i:s',strtotime($deliverReport->created_at))}}</td>
+      <td>{{$deliverReport->note}}</td>
+    </tr> @endif
+    
+    
+  </tbody>
+</table>

@@ -1,0 +1,3 @@
+Invoice,Customer Name,Contact No.,Customer Address,Post Code,Price,Instruction,Product Selling Price
+199170,John Doe,1873445555,"House name (Apt number), Road number ",7870,120,Comment regarding delivery,
+199171,Jane Doe,8.80187E+12,50 Lake Circus (7th floor) Kalabagan,7830,0,Give cash amount zero if payment already done,
